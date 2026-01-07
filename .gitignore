@@ -85,6 +85,10 @@ Thumbs.db
 *.temp
 *.bak
 
+# LibreOffice/OpenOffice lock files
+.~lock.*
+.~lock.*#
+
 # Data files
 *.dat
 *.data
