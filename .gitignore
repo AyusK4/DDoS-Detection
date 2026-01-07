@@ -1,0 +1,107 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+ENV/
+env/
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Machine Learning Models
+*.joblib
+*.pkl
+*.h5
+*.pb
+*.pt
+*.pth
+*.onnx
+models/*.joblib
+models/*.pkl
+
+# Large CSV Files and Datasets
+*.csv
+!requirements.txt
+10-1 attack-benign/10-1 Training sample/*.csv
+10-1 attack-benign/Test_60benign_40attack/*.csv
+10-1 attack-benign/Test_80benign_20attack/*.csv
+10-1 attack-benign/Preprocessed/*.csv
+50-50/*.csv
+50-50/Balanced training set/*.csv
+50-50/Preprocessed/*.csv
+50-50/Test_60benign_40attack/*.csv
+50-50/Test_80benign_20attack/*.csv
+CSV-01-12/01-12/*.csv
+CSV-03-11/03-11/*.csv
+
+# Plot Images (Optional - uncomment if you want to exclude plots)
+# *.png
+# *.jpg
+# *.jpeg
+# plots_*/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Data files
+*.dat
+*.data
+
+# Compressed files
+*.zip
+*.tar
+*.gz
+*.rar
+
+# Keep important directories
+!.gitkeep
+
+# Specific large files to ignore
+10-1 attack-benign/10-1 Training sample/full-training-data.csv
+10-1 attack-benign/Test_60benign_40attack/full-test-60-40.csv
+10-1 attack-benign/Test_80benign_20attack/full-test-80-20.csv
+50-50/full-training-data.csv
+50-50/full-test-60-40.csv
+50-50/full-test-80-20.csv

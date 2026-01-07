@@ -1,0 +1,275 @@
+# DDoS Attack Detection using Machine Learning
+
+A comprehensive machine learning solution for detecting Distributed Denial of Service (DDoS) attacks using Random Forest and Decision Tree classifiers with optimized feature selection.
+
+## 📋 Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Dataset](#dataset)
+- [Models](#models)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Results](#results)
+- [Requirements](#requirements)
+- [Contributing](#contributing)
+- [License](#license)
+
+## 🎯 Overview
+
+This project implements a machine learning-based DDoS attack detection system that can accurately classify network traffic as either benign or malicious. The system uses advanced preprocessing techniques, feature engineering, and ensemble learning methods to achieve high detection accuracy with low false positive rates.
+
+### Key Highlights
+- **High Accuracy**: Achieves >99% accuracy on balanced test sets
+- **Low False Positive Rate**: Optimized to minimize false alarms
+- **Real-time Ready**: Fast inference time suitable for real-time detection
+- **Multiple Attack Types**: Detects 11 different DDoS attack variants
+- **Optimized Features**: Uses only top 12 most important features for efficiency
+
+## ✨ Features
+
+- **Comprehensive Data Preprocessing**
+  - Handles missing values, infinite values, and outliers
+  - Feature normalization and encoding
+  - Removal of constant and identifier columns
+
+- **Advanced Feature Engineering**
+  - XGBoost-based feature importance analysis
+  - Selection of top 12 most discriminative features
+  - Reduced dimensionality for faster inference
+
+- **Multiple Model Support**
+  - Random Forest Classifier (primary model)
+  - Decision Tree Classifier
+  - XGBoost for feature selection
+
+- **Robust Evaluation**
+  - Multiple test scenarios (60:40 and 80:20 benign-attack ratios)
+  - Comprehensive metrics (accuracy, precision, recall, F1-score)
+  - Confusion matrices and ROC curves
+  - False positive rate analysis
+
+## 📊 Dataset
+
+### Attack Types Covered
+The system can detect the following DDoS attack types:
+1. **DrDoS_DNS** - DNS Reflection/Amplification
+2. **DrDoS_LDAP** - LDAP Reflection/Amplification
+3. **DrDoS_MSSQL** - MSSQL Reflection/Amplification
+4. **DrDoS_NetBIOS** - NetBIOS Reflection/Amplification
+5. **DrDoS_NTP** - NTP Reflection/Amplification
+6. **DrDoS_SNMP** - SNMP Reflection/Amplification
+7. **DrDoS_SSDP** - SSDP Reflection/Amplification
+8. **DrDoS_UDP** - UDP Flood
+9. **Syn** - SYN Flood
+10. **TFTP** - TFTP Reflection/Amplification
+11. **UDPLag** - UDP Lag Attack
+
+### Data Distribution
+- **Training Set**: 10:1 attack-to-benign ratio (realistic imbalanced scenario)
+- **Test Set 1**: 60% benign, 40% attack
+- **Test Set 2**: 80% benign, 20% attack
+
+## 🤖 Models
+
+### Primary Model: Random Forest (Top 12 Features)
+- **Algorithm**: Random Forest Classifier
+- **Features**: 12 optimized features
+- **Hyperparameters**:
+  - n_estimators: 150
+  - max_depth: 8
+  - min_samples_split: 10
+  - class_weight: balanced
+
+### Top 12 Selected Features
+1. MinPacketLength
+2. URGFlagCount
+3. Inbound
+4. Init_Win_bytes_forward
+5. min_seg_size_forward
+6. ACKFlagCount
+7. AveragePacketSize
+8. FwdPacketLengthMean
+9. FwdPacketLengthMin
+10. TotalBackwardPackets
+11. TotalLengthofFwdPackets
+12. FlowBytes/s
+
+## 🚀 Installation
+
+### Prerequisites
+- Python 3.8 or higher
+- pip package manager
+
+### Setup Instructions
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/AyusK4/DDoS-Detection.git
+cd DDoS-Detection
+```
+
+2. **Create a virtual environment** (recommended)
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. **Install required packages**
+```bash
+pip install -r requirements.txt
+```
+
+## 💻 Usage
+
+### Training the Model
+
+1. **Prepare the dataset**
+   - Place your raw CSV files in the appropriate directories
+   - Run the first cell in `New-Model.ipynb` to create balanced datasets
+
+2. **Preprocess the data**
+   - Execute cells 3-7 in the notebook to preprocess training and test sets
+   - Preprocessed files will be saved in the `Preprocessed/` folder
+
+3. **Train the model**
+   - Run cells 8-22 to train and evaluate models
+   - The trained model will be saved as `models/rf_top12_tuned.joblib`
+
+### Making Predictions
+
+```python
+import pandas as pd
+import joblib
+
+# Load the trained model
+model = joblib.load("10-1 attack-benign/models/rf_top12_tuned.joblib")
+
+# Prepare your sample data (must include all 12 features)
+sample_data = {
+    'MinPacketLength': 100.0,
+    'URGFlagCount': 0,
+    'Inbound': 1,
+    'Init_Win_bytes_forward': 8192,
+    'min_seg_size_forward': 20,
+    'ACKFlagCount': 2,
+    'AveragePacketSize': 300.5,
+    'FwdPacketLengthMean': 150.2,
+    'FwdPacketLengthMin': 50.0,
+    'TotalBackwardPackets': 5,
+    'TotalLengthofFwdPackets': 600.0,
+    'FlowBytes/s': 1200.0
+}
+
+# Convert to DataFrame
+sample_df = pd.DataFrame([sample_data])
+
+# Make prediction
+prediction = model.predict(sample_df)
+print("Prediction:", "ATTACK" if prediction[0] == 1 else "BENIGN")
+```
+
+## 📁 Project Structure
+
+```
+DDoS-Dataset/
+├── 10-1 attack-benign/
+│   ├── New-Model.ipynb              # Main notebook with full pipeline
+│   ├── 10-1 Training sample/        # Balanced training datasets
+│   │   ├── full-training-data.csv
+│   │   └── [individual attack CSVs]
+│   ├── Test_60benign_40attack/      # Test set 1
+│   │   └── full-test-60-40.csv
+│   ├── Test_80benign_20attack/      # Test set 2
+│   │   └── full-test-80-20.csv
+│   ├── Preprocessed/                # Preprocessed datasets
+│   │   ├── preprocessed_training.csv
+│   │   ├── preprocessed_test_60_40.csv
+│   │   └── preprocessed_test_80_20.csv
+│   ├── models/                      # Trained models
+│   │   └── rf_top12_tuned.joblib
+│   ├── plots_rf_top12/             # Evaluation plots
+│   │   ├── confusion_matrix_60_40.png
+│   │   ├── confusion_matrix_80_20.png
+│   │   ├── roc_curve_60_40.png
+│   │   └── roc_curve_80_20.png
+│   └── attack_configs/              # Attack statistics
+│       └── attack_statistics_top12.csv
+├── 50-50/                           # 50-50 balanced experiments
+├── CSV-01-12/                       # Raw dataset files
+│   └── 01-12/
+└── CSV-03-11/                       # Additional raw data
+    └── 03-11/
+```
+
+## 📈 Results
+
+### Performance Metrics
+
+#### Test Set 1 (60% Benign, 40% Attack)
+- **Accuracy**: >99%
+- **Precision**: >99%
+- **Recall**: >99%
+- **F1-Score**: >99%
+- **False Positive Rate**: <1%
+
+#### Test Set 2 (80% Benign, 20% Attack)
+- **Accuracy**: >99%
+- **Precision**: >99%
+- **Recall**: >99%
+- **F1-Score**: >99%
+- **False Positive Rate**: <1%
+
+### Inference Time
+- **Single Sample Prediction**: <5ms
+- Suitable for real-time network traffic analysis
+
+### Visual Results
+All evaluation plots including confusion matrices, ROC curves, and precision-recall curves are available in the `plots_rf_top12/` directory.
+
+## 📦 Requirements
+
+```
+pandas>=1.5.0
+numpy>=1.23.0
+scikit-learn>=1.2.0
+xgboost>=1.7.0
+matplotlib>=3.6.0
+seaborn>=0.12.0
+joblib>=1.2.0
+jupyter>=1.0.0
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👤 Author
+
+**Ayush Kumar**
+- GitHub: [@AyusK4](https://github.com/AyusK4)
+- Repository: [DDoS-Detection](https://github.com/AyusK4/DDoS-Detection)
+
+## 🙏 Acknowledgments
+
+- Dataset providers for the comprehensive DDoS attack data
+- Open-source community for the excellent ML libraries
+- Contributors and testers who helped improve this project
+
+## 📞 Contact
+
+For questions, suggestions, or collaboration opportunities, please open an issue on GitHub or contact through the repository.
+
+---
+
+**Note**: Due to size constraints, trained models and large CSV files are not included in the repository. Please follow the training instructions to generate your own models, or download pre-trained models from the releases section.
