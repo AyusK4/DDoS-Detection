@@ -180,7 +180,7 @@ prediction = model.predict(sample_df)
 print("Prediction:", "ATTACK" if prediction[0] == 1 else "BENIGN")
 ```
 
-##  Results
+## 📈 Results
 
 ### Performance Metrics
 
