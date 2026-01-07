@@ -13,7 +13,6 @@ A comprehensive machine learning solution for detecting Distributed Denial of Se
 - [Results](#results)
 - [Requirements](#requirements)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## 🎯 Overview
 
@@ -51,6 +50,17 @@ This project implements a machine learning-based DDoS attack detection system th
 
 ## 📊 Dataset
 
+### Dataset Source
+This project uses the **CICDDoS2019** dataset, which contains realistic network traffic data including both benign traffic and various types of DDoS attacks. The dataset was collected by the Canadian Institute for Cybersecurity and provides comprehensive network flow features extracted using CICFlowMeter.
+
+### Dataset Organization
+- **CSV-01-12/01-12/**: Original raw training dataset files containing 11 different attack types
+- **CSV-03-11/03-11/**: Additional raw test dataset files
+- **10-1 attack-benign/**: **PRIMARY FOLDER** - Contains the final optimized model with 10:1 attack-to-benign ratio balancing
+- **50-50/**: Experimental folder with 50-50 balanced datasets (initial experiments)
+
+> **Note**: The final production-ready model is located in the `10-1 attack-benign/` folder. The 50-50 folder contains early experimental work with perfectly balanced datasets, which showed good results but the 10:1 ratio proved more robust for real-world scenarios.
+
 ### Attack Types Covered
 The system can detect the following DDoS attack types:
 1. **DrDoS_DNS** - DNS Reflection/Amplification
@@ -65,10 +75,12 @@ The system can detect the following DDoS attack types:
 10. **TFTP** - TFTP Reflection/Amplification
 11. **UDPLag** - UDP Lag Attack
 
-### Data Distribution
-- **Training Set**: 10:1 attack-to-benign ratio (realistic imbalanced scenario)
+### Data Distribution (Final Model - 10:1 Ratio)
+- **Training Set**: 10:1 attack-to-benign ratio (realistic imbalanced scenario mimicking real-world traffic)
 - **Test Set 1**: 60% benign, 40% attack
 - **Test Set 2**: 80% benign, 20% attack
+
+Each attack type CSV contains network flow features such as packet lengths, flag counts, flow duration, bytes per second, and various statistical measures of the traffic patterns.
 
 ## 🤖 Models
 
@@ -173,9 +185,9 @@ print("Prediction:", "ATTACK" if prediction[0] == 1 else "BENIGN")
 
 ```
 DDoS-Dataset/
-├── 10-1 attack-benign/
+├── 10-1 attack-benign/              # ⭐ PRIMARY - Final optimized model
 │   ├── New-Model.ipynb              # Main notebook with full pipeline
-│   ├── 10-1 Training sample/        # Balanced training datasets
+│   ├── 10-1 Training sample/        # Balanced training datasets (10:1 ratio)
 │   │   ├── full-training-data.csv
 │   │   └── [individual attack CSVs]
 │   ├── Test_60benign_40attack/      # Test set 1
@@ -195,11 +207,13 @@ DDoS-Dataset/
 │   │   └── roc_curve_80_20.png
 │   └── attack_configs/              # Attack statistics
 │       └── attack_statistics_top12.csv
-├── 50-50/                           # 50-50 balanced experiments
-├── CSV-01-12/                       # Raw dataset files
-│   └── 01-12/
-└── CSV-03-11/                       # Additional raw data
-    └── 03-11/
+├── 50-50/                           # Experimental folder (50-50 balanced experiments)
+│   ├── Modle.ipynb                  # Experimental notebook
+│   └── [experimental datasets and plots]
+├── CSV-01-12/                       # Raw training dataset (CICDDoS2019)
+│   └── 01-12/                       # 11 attack type CSV files
+└── CSV-03-11/                       # Raw test dataset
+    └── 03-11/                       # Additional test CSV files
 ```
 
 ## 📈 Results
@@ -250,26 +264,6 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👤 Author
-
-**Ayush Kumar**
-- GitHub: [@AyusK4](https://github.com/AyusK4)
-- Repository: [DDoS-Detection](https://github.com/AyusK4/DDoS-Detection)
-
-## 🙏 Acknowledgments
-
-- Dataset providers for the comprehensive DDoS attack data
-- Open-source community for the excellent ML libraries
-- Contributors and testers who helped improve this project
-
-## 📞 Contact
-
-For questions, suggestions, or collaboration opportunities, please open an issue on GitHub or contact through the repository.
-
 ---
 
-**Note**: Due to size constraints, trained models and large CSV files are not included in the repository. Please follow the training instructions to generate your own models, or download pre-trained models from the releases section.
+**Note**: Due to size constraints, trained models and large CSV files are not included in the repository. Please follow the training instructions to generate your own models.
