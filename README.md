@@ -9,7 +9,6 @@ A comprehensive machine learning solution for detecting Distributed Denial of Se
 - [Models](#-models)
 - [Installation](#-installation)
 - [Usage](#-usage)
-- [Project Structure](#-project-structure)
 - [Results](#-results)
 - [Requirements](#-requirements)
 - [Contributing](#-contributing)
@@ -181,42 +180,7 @@ prediction = model.predict(sample_df)
 print("Prediction:", "ATTACK" if prediction[0] == 1 else "BENIGN")
 ```
 
-## 📁 Project Structure
-
-```
-DDoS-Dataset/
-├── 10-1 attack-benign/              # ⭐ PRIMARY - Final optimized model
-│   ├── New-Model.ipynb              # Main notebook with full pipeline
-│   ├── 10-1 Training sample/        # Balanced training datasets (10:1 ratio)
-│   │   ├── full-training-data.csv
-│   │   └── [individual attack CSVs]
-│   ├── Test_60benign_40attack/      # Test set 1
-│   │   └── full-test-60-40.csv
-│   ├── Test_80benign_20attack/      # Test set 2
-│   │   └── full-test-80-20.csv
-│   ├── Preprocessed/                # Preprocessed datasets
-│   │   ├── preprocessed_training.csv
-│   │   ├── preprocessed_test_60_40.csv
-│   │   └── preprocessed_test_80_20.csv
-│   ├── models/                      # Trained models
-│   │   └── rf_top12_tuned.joblib
-│   ├── plots_rf_top12/             # Evaluation plots
-│   │   ├── confusion_matrix_60_40.png
-│   │   ├── confusion_matrix_80_20.png
-│   │   ├── roc_curve_60_40.png
-│   │   └── roc_curve_80_20.png
-│   └── attack_configs/              # Attack statistics
-│       └── attack_statistics_top12.csv
-├── 50-50/                           # Experimental folder (50-50 balanced experiments)
-│   ├── Modle.ipynb                  # Experimental notebook
-│   └── [experimental datasets and plots]
-├── CSV-01-12/                       # Raw training dataset (CICDDoS2019)
-│   └── 01-12/                       # 11 attack type CSV files
-└── CSV-03-11/                       # Raw test dataset
-    └── 03-11/                       # Additional test CSV files
-```
-
-## 📈 Results
+##  Results
 
 ### Performance Metrics
 
