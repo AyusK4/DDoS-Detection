@@ -3,16 +3,16 @@
 A comprehensive machine learning solution for detecting Distributed Denial of Service (DDoS) attacks using Random Forest and Decision Tree classifiers with optimized feature selection.
 
 ## 📋 Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Dataset](#dataset)
-- [Models](#models)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Results](#results)
-- [Requirements](#requirements)
-- [Contributing](#contributing)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Dataset](#-dataset)
+- [Models](#-models)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Project Structure](#-project-structure)
+- [Results](#-results)
+- [Requirements](#-requirements)
+- [Contributing](#-contributing)
 
 ## 🎯 Overview
 
